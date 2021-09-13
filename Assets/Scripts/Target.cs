@@ -16,10 +16,15 @@ public class Target : MonoBehaviour
     private float ySpawnPos = -2.0f;
 
     public int pointValue;
-    
+
+    private AudioSource managerAudio;
+    public AudioClip soundPlay;    
+
     // Start is called before the first frame update
     void Start()
     {
+        managerAudio = GetComponent<AudioSource>();
+
         targetRb = GetComponent<Rigidbody>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();        
 
@@ -38,15 +43,32 @@ public class Target : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Destroy(gameObject);
-        gameManager.UpdateScore(pointValue);
+        if (gameManager.isGameActive)
+        {
+            gameManager.UpdateScore(pointValue);
 
-        Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);       
+            if (gameObject.CompareTag("Bad"))
+            {
+                Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+                                
+                Destroy(gameObject);
+
+                gameManager.GameOver();
+            }
+            else
+            {
+                Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+                
+                managerAudio.PlayOneShot(soundPlay, 1.0f);
+
+                Destroy(gameObject, 0.1f);
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
+        Destroy(gameObject);        
     }
 
     Vector3 RandomForce()

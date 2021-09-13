@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3697605735329296839}
   m_Layer: 0
   m_Name: Bad_Skull
-  m_TagString: Untagged
+  m_TagString: Bad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,3 +127,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionParticle: {fileID: 1493741090855088568, guid: c1da421ce42a42c43935daa46db52690, type: 3}
   pointValue: -5
+  soundPlay: {fileID: 8300000, guid: 5dd61947373b61443bf863f53e10bc5f, type: 3}
