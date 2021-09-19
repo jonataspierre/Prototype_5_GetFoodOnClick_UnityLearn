@@ -10,13 +10,16 @@ public class GameManager : MonoBehaviour
     public List<GameObject> targets;
     private AudioSource soundGameOver;
 
+    public GameObject titleScreen;
+    public GameObject cameraSound;
+
     public TextMeshProUGUI scoreText;
     private int score;
 
     public TextMeshProUGUI gameOverText;
     public Button restartButton;
 
-    private float spawnRate = 1.5f;
+    private float spawnRate = 1.0f;
 
     public bool isGameActive;
 
@@ -24,10 +27,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         soundGameOver = GetComponent<AudioSource>();
-        
-        isGameActive = true;
-        score = 0;
-        StartCoroutine(SpawnTarget());        
     }
 
     // Update is called once per frame
@@ -63,12 +62,19 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame()
-    {
+    {        
         SceneManager.LoadScene(0);
     }
 
-    public void PlaySound ()
+    public void StartGame (int difficulty)
     {
+        isGameActive = true;
+        score = 0;
 
+        spawnRate /= difficulty;
+
+        StartCoroutine(SpawnTarget());
+
+        titleScreen.gameObject.SetActive(false);
     }
 }
