@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 6534836740025372497}
   - component: {fileID: 6163255687956129031}
   - component: {fileID: -2359603959470225865}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Food_Cookie
-  m_TagString: Untagged
+  m_TagString: Food
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

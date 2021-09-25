@@ -68,7 +68,15 @@ public class Target : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);        
+        if (gameObject.CompareTag("Food") & gameManager.isGameActive)
+        {
+            gameManager.UpdateLiveScore(-1);
+            Destroy(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     Vector3 RandomForce()
@@ -84,5 +92,37 @@ public class Target : MonoBehaviour
     Vector3 RandomSpawnPos()
     {
         return new Vector3(Random.Range(-xRange, xRange), ySpawnPos);
+    }
+
+    public void DestroyTarget()
+    {
+        if (gameManager.isGameActive)
+        {
+            //Destroy(gameObject);
+            //Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+            //gameManager.UpdateScore(pointValue);
+
+            if (gameManager.isGameActive)
+            {
+                gameManager.UpdateScore(pointValue);
+
+                if (gameObject.CompareTag("Bad"))
+                {
+                    Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+
+                    Destroy(gameObject);
+
+                    gameManager.GameOver();
+                }
+                else
+                {
+                    Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+
+                    managerAudio.PlayOneShot(soundPlay, 1.0f);
+
+                    Destroy(gameObject, 0.1f);
+                }
+            }
+        }
     }
 }

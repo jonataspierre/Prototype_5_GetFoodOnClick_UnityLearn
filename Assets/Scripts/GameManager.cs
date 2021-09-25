@@ -13,8 +13,14 @@ public class GameManager : MonoBehaviour
     public GameObject titleScreen;
     public GameObject cameraSound;
 
+    public GameObject pauseScreen;
+    private bool paused;
+
     public TextMeshProUGUI scoreText;
     private int score;
+
+    public TextMeshProUGUI livesText;
+    private int live;
 
     public TextMeshProUGUI gameOverText;
     public Button restartButton;
@@ -27,12 +33,33 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         soundGameOver = GetComponent<AudioSource>();
+
+        UpdateLiveScore(3);
+    }
+
+    void ChangePause()
+    {
+        if (!paused)
+        {
+            paused = true;
+            pauseScreen.SetActive(true);
+            Time.timeScale = 0;
+        }
+        else
+        {
+            paused = false;
+            pauseScreen.SetActive(false);
+            Time.timeScale = 1;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ChangePause();
+        }
     }
 
     IEnumerator SpawnTarget()
@@ -51,6 +78,18 @@ public class GameManager : MonoBehaviour
         score += scoreToAdd;
         
         scoreText.text = "Score \n" + score;
+    }
+
+    public void UpdateLiveScore(int scoreLive)
+    {
+        live += scoreLive;
+
+        livesText.text = "Lives \n" + live;
+
+        if (live == 0)
+        {
+            GameOver();
+        }
     }
 
     public void GameOver()
